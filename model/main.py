@@ -155,7 +155,7 @@ def prepare_data():
 def fit_model(path: str = Form(...)):
 
     logging.info(f"Чтение и обработка данных из {path}")
-    data = prepare_transactions_dataset(path, num_parts_to_preprocess_at_once=2, num_parts_total=2, save_to_path=path)
+    data = prepare_transactions_dataset(path, num_parts_to_preprocess_at_once=2, num_parts_total=12, save_to_path=path)
     targets = pd.read_csv(os.path.join(path, 'train_target.csv'))
     df = data.merge(targets, on='id')
     logging.info("Подготовка данных завершена")
@@ -195,6 +195,7 @@ def fit_model(path: str = Form(...)):
     with open(json_path, 'w', encoding='utf-8') as json_file:
         json.dump(json_data, json_file, indent=4, ensure_ascii=False)
     logging.info(f"Признаки первой строки сохранены в {json_path}")
+
 
     return {
         'message': "Модель успешно обучена и сохранена",
